@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
-
 export const ParagraphGenerator = () => {
-  const [fileContent, setFileContent] = useState('');
-  const fileName = 'paragraph.txt';
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(fileName, {
-        headers: {
-        'Content-Type': 'text/plain'
-        }
-      })
-      if(response.ok) {
-        const content = await response.text();
-        setFileContent(content);
-        console.log(content);
-        console.log("the file is fetch properly");
-      }else {
-        console.log("The file is not fetch properly");
-      }
+  const [sentence, setSentence] = useState('');
+  const [words, setWords] = useState(0);
+  const Content = "hi this is ameer jafar who is created this text file.";
+  const list = Content.split(' ');
+  const onClickHander = () => {
+    console.log(list);
+    let str = "";
+    for(let i = 0; i < words; i++) { 
+      const randomIndex = Math.floor(Math.random() * list.length);
+      str += list[randomIndex] + " ";
     }
-    fetchData();
-  }, [fileContent]);
+    setSentence(str);
+  }
   return (
     <div>
       <h2>Para Generator</h2>
-      <input type = "text" placeholder='Enter size of your paragraph'></input>
-      <button>Generate</button>
-      <p>{fileContent}</p>
+      <input onChange = {(events) => {
+        setWords(parseInt(events.target.value));
+      }} type = "text" placeholder='Enter size of your paragraph'></input>
+      <button onClick = {onClickHander}>Generate</button>
+      <p>{sentence}</p>
     </div>
   )
 };
-
-
+ 
